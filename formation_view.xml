@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <menuitem  id="menu_formation"  name="Formation" sequence="400" />
+
+        <menuitem id="menu_formation_support" name="Support" parent="menu_formation" sequence="5" />
+
+        <menuitem id="menu_formation_configuration" name="Configuration" parent="menu_formation" sequence="10" />
+
+        <menuitem id="menu_formation_suivi" name="Suivi" parent="menu_formation" sequence="15" />
+
+<!-- menu formation -->
+
+      <record id="action_formation_cours" model="ir.actions.act_window">
+            <field name="name">Formations </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">formation</field>
+            <field name="view_mode">tree,form</field>
+
+
+
+
+
+        </record>
+
+
+        <menuitem action="action_formation_cours" id="menu_formation_cours" name="Contenu" parent="menu_formation_support" sequence="5" />
+<!-- formation -->
+
+        <record id="view_formation_tree" model="ir.ui.view">
+            <field name="name">formation.tree</field>
+            <field name="model">formation</field>
+            <field name="arch" type="xml">
+                <tree string="Formation">
+                    <field name="categorie_id" />
+                    <field name="name" />
+                        <field name="niveau_objectif"  />
+                        <field name="niveau_actuel" />  
+                        <field name="niveau_necessaire" groups="formation.formation_admin" /> 
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_formation_form" model="ir.ui.view">
+            <field name="name">formation.form</field>
+            <field name="model">formation</field>
+            <field name="arch" type="xml">
+                <form string="Formation" version="7.0">
+
+                    <label for="name" class="oe_edit_only"/>
+                    <h1><field name="name"/> 
+                     <group colspan="6" col="6" >
+                        <button name="maj_session_moins" string="-" type="object" help=" Diminuer d'un point mon niveau actuel"  />
+                      <field name="niveau_actuel" nolabel="1" help=" Mon niveau actuel"  /> 
+                        <button name="maj_session_plus" string="+" type="object"  help=" Augmenter d'un point mon niveau actuel"  />
+                          </group>
+                     </h1>
+
+                     <group colspan="6" col="6" >
+
+                         <field name="niveau_necessaire" /> 
+                        <field name="niveau_objectif"  />
+
+                     </group>
+                     <field name="contenu"   widget="html"/>
+
+                 <notebook>
+
+                        <page string="information" groups="formation.formation_formateur,formation.formation_admin">
+                     <group>
+                        <field name="categorie_id" groups="formation.formation_formateur,formation.formation_admin" />
+                        <field name="version"  groups="formation.formation_admin"/> 
+
+                        <field name="active" groups="formation.formation_admin" />
+
+                        <field name="auteur" groups="formation.formation_admin" />
+                        <field name="valide" groups="formation.formation_admin" />
+                        <field name="relecteur" groups="formation.formation_admin" />
+                        <field name="confirmation" groups="formation.formation_admin" />
+
+
+                        <field name="duree_vie"  groups="formation.formation_admin" />
+                        <field name="a_refaire" groups="formation.formation_admin" />
+                     </group>
+                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                     </page>
+                        <page string="inscription" groups="formation.formation_formateur,formation.formation_admin">
+
+             
+                 <field name="formation_user"   groups="formation.formation_formateur,formation.formation_admin" >
+
+
+                 <tree >
+                <field name="user_id"  />
+                <field name="niveau_actuel"   />
+                <field name="niveau_necessaire"   />
+                <field name="duree_vie"   />
+                <field name="date_cours"   />
+
+                 </tree >
+
+                <form  >
+                <field name="user_id"  />
+                <field name="niveau_actuel"  />
+                <field name="niveau_necessaire"  />
+                <field name="duree_vie"  />
+                <field name="date_cours"  />
+
+                </form>
+
+
+            </field>
+                 <field name="formation_groupe"  groups="formation.formation_admin" >
+
+
+                 <tree >
+                <field name="groupe_id"  />
+                <field name="niveau_necessaire"  />
+                 </tree >
+
+                <form>
+                <field name="groupe_id"  />
+                <field name="niveau_necessaire"  />
+                </form>
+
+
+            </field>
+
+                     </page>
+                        <page string="pre requis" groups="formation.formation_admin" >
+
+  
+
+                 <field name="formation_prerequis"  groups="formation.formation_admin" >
+
+
+                 <tree >
+                <field name="prerequis_id"  />
+                <field name="niveau_necessaire"  />
+                 </tree >
+
+                <form>
+                 
+                <field name="prerequis_id"  />
+                <field name="niveau_necessaire"  />
+                </form>
+
+
+            </field>
+
+                     </page>
+
+                        <page string="Compétences" groups="formation.formation_admin" >
+                 <field name="competence_ids" groups="formation.formation_admin"  >
+
+                 <tree >
+
+                <field name="name"  />
+                <field name="parent_id" />
+
+                 </tree >
+                </field>
+
+                    </page>
+                </notebook>
+                </form>
+           </field>
+        </record>
+
+<!-- menu formation competence -->
+
+      <record id="action_formation_competence" model="ir.actions.act_window">
+            <field name="name">Competence </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">formation.competence</field>
+            <field name="view_mode">tree,form</field>
+
+
+
+
+
+        </record>
+
+
+        <menuitem action="action_formation_competence" id="menu_formation_competence" name="Compétence" parent="menu_formation_configuration" sequence="15" />
+<!-- competence -->
+
+        <record id="view_competence_tree" model="ir.ui.view">
+            <field name="name">comptence.tree</field>
+            <field name="model">formation.competence</field>
+            <field name="arch" type="xml">
+                <tree string="Competence">
+                    <field name="parent_id" />
+                    <field name="type" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_competence_form" model="ir.ui.view">
+            <field name="name">competence.form</field>
+            <field name="model">formation.competence</field>
+            <field name="arch" type="xml">
+                <form string="Competence">
+                    <field name="name" />
+                    <field name="parent_id" />
+                    <field name="sequence" />
+                    <field name="type" />
+                 <field name="savoir_id" >
+
+
+                 <tree >
+                <field name="name"  />
+                <field name="type"  />
+                 </tree >
+
+                <form>
+                <field name="name"  />
+                <field name="type"  />
+                </form>
+
+
+                </field>
+               
+                </form>
+           </field>
+        </record>
+<!-- menu formation categorie-->
+
+      <record id="action_formation_categorie" model="ir.actions.act_window">
+            <field name="name">Catégorie </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">formation.categorie</field>
+            <field name="view_mode">tree,form</field>
+
+
+
+
+
+        </record>
+
+
+        <menuitem action="action_formation_categorie" id="menu_formation_categorie" name="Catégorie" parent="menu_formation_configuration" sequence="10" />
+<!-- competence -->
+
+        <record id="view_categorie_tree" model="ir.ui.view">
+            <field name="name">categorie.tree</field>
+            <field name="model">formation.categorie</field>
+            <field name="arch" type="xml">
+                <tree string="Catégorie">
+                    <field name="parent_id" />
+                    <field name="type" />
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="view_categorie_form" model="ir.ui.view">
+            <field name="name">categorie.form</field>
+            <field name="model">formation.categorie</field>
+            <field name="arch" type="xml">
+                <form string="Catégorie">
+                    <field name="name" />
+                    <field name="parent_id" />
+                    <field name="sequence" />
+                    <field name="type" />
+
+               
+                </form>
+           </field>
+        </record>
+
+<!-- menu formation suvi -->
+
+      <record id="action_formation_suivi_utilisateur" model="ir.actions.act_window">
+            <field name="name">Utlisateur </field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">formation.user</field>
+            <field name="view_mode">tree</field>
+
+
+
+
+
+        </record>
+
+
+        <menuitem action="action_formation_suivi_utilisateur" id="menu_formation_suivi_utilisateur" name="Utilisateur" parent="menu_formation_suivi" sequence="10"  groups="formation.formation_formateur,formation.formation_admin"  />
+<!-- suivi -->
+
+        <record id="view_suivi_tree" model="ir.ui.view">
+            <field name="name">suvi.tree</field>
+            <field name="model">formation.user</field>
+            <field name="arch" type="xml">
+                <tree string="Utilisateur">
+                    <field name="formation_id" />
+                    <field name="user_id" />
+                    <field name="niveau_actuel" />
+                    <field name="niveau_necessaire" />
+                    <field name="duree_vie" />
+                    <field name="date_cours" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+    </data>
+</openerp>
