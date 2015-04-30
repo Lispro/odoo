@@ -21,7 +21,6 @@
 {
         "name" : "formation",
         "version" : "08042015",
-        "versiono" : "03042015",
         "author" : "lispro",
         "website" : "http://www.le-savoir-libre.fr",
         "category" : "Vertical Modules/Parametrization",
